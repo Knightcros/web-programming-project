@@ -28,10 +28,30 @@
 }
 
 :root {
+  --grad-color-1: #635c5c;
+  --grad-color-2: #dd9521;
+  --grad-color-3: #4dc2ec;
+  --grad-color-4: #b7d523;
+            
+  --color-text-on-grad: #ffffff;
+  --color-link-highlight: rgba(255, 255, 255, 0.15);
+  --color-cta-bg: rgba(0, 0, 0, 0.2);
+  --color-focus-outline: #ffffff;
+
+  --font-family-sans-serif: 'Kosugi Maru', system-ui, -apple-system, sans-serif;
+  --font-weight-bold: 600;
+
+  --navbar-height: 80px;
+  --navbar-padding: 2.0rem;
+  --container-width: 1140px;
+  --transition-speed: 0.3s;
+  --animation-speed-gradient: 15s;
   --big-font: 5rem;
   --h2-font: 1.9rem;
   --p-font: 1rem;
 }
+
+*, *::before, *::after { box-sizing: border-box; }
 
 [data-theme='dark'] {
   --bg--image: url(https://i0.wp.com/picjumbo.com/wp-content/uploads/abstract-deep-space-wallpaper-free-image.jpeg?w=2210&quality=70);
@@ -67,6 +87,8 @@ body {
   background-size: cover;
   background-color: var(--bg--color);
   color: var(--text-color);
+  margin: 0; font-family: var(--font-family-sans-serif);
+  font-size: 1rem; line-height: 1.6;
 }
 
 /* Header */
@@ -91,17 +113,94 @@ header {
   font-weight: 600;
 }
 
+.content { height: 200vh; padding: 120px 2rem; text-align: center; }
+  ul{ list-style: none; margin: 0; padding: 0; }
+  a { text-decoration: none; color: inherit; }
+
+ @keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+   }
+        
+
 span {
   color: var(--main-color)
 }
 
 .navbar {
-  display: flex;
+  height: var(--navbar-height); display: flex; align-items: center;
+  color: var(--color-text-on-grad);
+  background: linear-gradient(-45deg, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3), var(--grad-color-4));
+  background-size: 400% 400%;
+  animation: gradient-animation var(--animation-speed-gradient) ease infinite;
 }
 
+.navbar__container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: var(--container-width); margin: 0 auto; padding: 0 var(--navbar-padding); }
+  .navbar__brand, .navbar__link { text-shadow: 1 2px 4px rgba(0, 0, 0, 0.25); }
+  .navbar__brand { font-size: 4.75rem; font-weight: var(--font-weight-bold); }
+  .navbar__toggle { display: block; border: none; padding: 0.5rem; background: transparent; cursor: pointer; z-index: 1001; color: inherit; }
+  .navbar__toggle .bar { display: block; width: 25px; height: 3px; margin: 5px auto; background-color: var(--color-text-on-grad); border-radius: 2px; transition: all var(--transition-speed) ease; }
+  .navbar__toggle.is-active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .navbar__toggle.is-active .bar:nth-child(2) { opacity: 0; }
+  .navbar__toggle.is-active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        
+  .navbar__menu { display: none; flex-direction: column; width: 100%; position: absolute; top: var(--navbar-height); left: 0; background-color: var(--grad-color-3); box-shadow: 0 8px 16px rgba(0,0,0,0.15); z-index: 1000; }
+  .navbar__menu.is-active { display: flex; }
+  .navbar__item { text-align: center; }
+  .navbar__link { display: block; padding: 1.5rem; font-weight: var(--font-weight-bold); }
+  .navbar__link:hover, .navbar__link:focus { background-color: var(--color-link-highlight); }
+
+  :is(.navbar__toggle, .navbar__link):focus-visible { outline: 2px solid var(--color-focus-outline); outline-offset: 3px; border-radius: 4px; }
+
+  @media (min-width: 768px) {
+  .navbar__toggle { display: none; }
+  .navbar__menu { display: flex; flex-direction: row; align-items: center; position: static; width: auto; background: none; box-shadow: none; z-index: auto; }
+  .navbar__list { display: flex; align-items: center; gap: 0.5rem; }
+
+  .navbar__link { padding: 0.5rem 1rem; border-radius: 8px; transition: background-color var(--transition-speed) ease; }
+  .navbar__link:hover, .navbar__link:focus { background-color: var(--color-link-highlight); }
+            
+  /* --- CTA Button with Gradient Border --- */
+  .navbar__item--cta { margin-left: 1rem; }
+
+  .navbar__link--cta {
+  position: relative; /* Needed for the ::before pseudo-element */
+  background-color: var(--color-cta-bg);
+  color: var(--color-text-on-grad);
+  font-weight: var(--font-weight-bold);
+  padding: 0.75rem 1.5rem;
+  text-shadow: none;
+  border: 2px solid transparent; /* Reserve space for the gradient border */
+  transition: background-color var(--transition-speed) ease;
+  z-index: 1; /* Ensures border appears correctly */
+  }
+
+  /* Create the gradient border using a pseudo-element behind the link */
+  .navbar__link--cta::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: -1;
+  margin: -2px; /* Negative margin pulls it behind the border */
+  border-radius: inherit; /* Match the parent's border-radius */
+  background: linear-gradient(-45deg, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3), var(--grad-color-4));
+  background-size: 400% 400%;
+  animation: gradient-animation var(--animation-speed-gradient) ease infinite;
+  }
+
+  .navbar__link--cta:hover, .navbar__link--cta:focus {
+  background-color: transparent;
+  }
+    }
+
+  @media (prefers-reduced-motion: reduce) {
+  .navbar, .navbar__link--cta::before { animation: none; }
+  }
+  
 .navbar a {
   color: var(--text-color);
-  font-size: 1rem;
+  font-size: 1.10rem;
   font-weight: 500;
   padding: 10px 20px;
 }
@@ -626,7 +725,8 @@ input:checked + .slider::before {
    
 <body>
   <!-- Start of Header -->
-  <header>
+  <header class="navbar">
+
      <div class="theme-switch-wrapper">
       <!-- Text and icon -->
       <span id="toggle-icon">
@@ -643,7 +743,7 @@ input:checked + .slider::before {
     <a href="#" class="logo">Web<span>Programming</span></a>
     <div class="bx bx-menu" id="menu-icon"></div>
 
-    <ul class="navbar">
+    
       <li><a href="#home">Home</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
@@ -794,7 +894,7 @@ input:checked + .slider::before {
 
   <!-- Start of Footer Section -->
   <div class="footer">
-    <p>Webprogramming Project by <a href="https://github.com/Knightcros/Codes" target="_blank">Danikko Galang</a></p>
+    <p>Webprogramming Project by:<a href="https://github.com/Knightcros/Codes" target="_blank"><span> Danikko Galang<span></span></a></p>
   </div>
   <!-- End of Footer Section -->
 
