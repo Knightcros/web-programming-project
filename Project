@@ -52,8 +52,9 @@
   --text-color: #1d0d0d;
   --text-color-secondary: #96ad89; 
   --2nd-main-color: #180b0b;
+  --3rd-main-color: hsl(0, 100%, 100%);
   --main-color: #9370DB;
-  --primary-color: rgb(150, 65, 255);
+  --primary-color: rgb(229, 223, 238);
   --primary-variant: #6c63ff;
   --secondary-color: #03dac5;
   --on-primary: #000;
@@ -353,7 +354,7 @@ section {
 .box h5 {
   font-size: 14px;
   font-weight: 500;
-  color: var(--2nd-main-color);
+  color: var(--3rd-main-color);
 }
 
 .box:hover {
@@ -392,14 +393,14 @@ form textarea {
   outline: none;
   border: none;
   background: #0b0b13;
-  color: var(--text-color);
+  color: var(--3rd-text-color);
   margin-bottom: 0.5rem;
   border-radius: 5px;
 }
 
 form input::placeholder, 
 form textarea::placeholder {
-  color: var(--2nd-main-color);
+  color: var(--3rd-main-color);
 }
 
 textarea {
@@ -432,7 +433,7 @@ form .send-btn:hover {
 .footer {
   text-align: center;
   padding: 30px;
-  color: var(--2nd-main-color);
+  color: var(--3rd-main-color);
   background: #0b0b13;
   line-height: 1.8rem;
   margin-top: 3rem;
@@ -783,7 +784,7 @@ input:checked + .slider::before {
     <div class="contact-form">
       <form action="">
         <input type="" placeholder="Name" required>
-        <input type="email" placeholder="Email" required">
+        <input type="email" placeholder="Email" required>
         <textarea name="" id="" cols="30" rows="10" placeholder="Message" required></textarea>
         <input type="submit" value="Send Message" class="send-btn">
       </form>
