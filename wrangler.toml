@@ -1,9 +1,8 @@
-name = "web-programming-project"
-type = "javascript"
-account_id = "YOUR_CLOUDFLARE_ACCOUNT_ID"
-workers_dev = true
+name = "webprogramming-project"  
+main = "./"                      
 compatibility_date = "2026-01-06"
 
 [site]
-bucket = "./public"
-entry-point = "workers-site"
+bucket = "./"                     
+entry-point = ""                  
+
